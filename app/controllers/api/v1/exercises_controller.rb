@@ -1,5 +1,7 @@
 class Api::V1::ExercisesController < ApplicationController
-   
+   def index
+    @exercises = Exercise.all
+   end
     def create
         @exercises = Exercises.new(exercises_params)
 
@@ -33,5 +35,5 @@ class Api::V1::ExercisesController < ApplicationController
     def exercises_params
         params.require(:exercises).permit(:name, :set, :weight_kg, :reps, :session_id)
     end
-end
+
 end

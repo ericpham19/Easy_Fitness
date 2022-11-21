@@ -14,7 +14,7 @@ class Api::V1::AuthController < ApplicationController
    def show
        @user = User.find_by(id: user_id)
        if logged_in?
-           render json: @user
+           render json: current_user
        else
            render json: { error: 'No user could be found'}, status: 401
        end
@@ -24,5 +24,4 @@ class Api::V1::AuthController < ApplicationController
    def user_login_params
      params.require(:user).permit(:username, :password, :email)
    end
-end
 end

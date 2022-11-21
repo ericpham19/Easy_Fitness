@@ -1,7 +1,10 @@
 class Api::V1::SessionsController < ApplicationController
-    serialize :exercise_name, Array
+   
     before_action :set_session, only: %i[ show edit update destroy ]
     
+    def index
+        @session= Session.all
+    end
     def create
         @session = Session.new(session_params)
 
@@ -30,5 +33,5 @@ class Api::V1::SessionsController < ApplicationController
     def session_params
         params.require(:session).permit(:name, :notes, :exercise_name, :user_id)
     end
-end
+
 end
