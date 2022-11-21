@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_19_045941) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_21_004145) do
   create_table "exercises", force: :cascade do |t|
     t.string "name"
     t.integer "set"
@@ -19,12 +19,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_19_045941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "session_id", null: false
+    t.integer "user_id", null: false
     t.index ["session_id"], name: "index_exercises_on_session_id"
+    t.index ["user_id"], name: "index_exercises_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|
     t.string "name"
     t.text "notes"
+    t.text "exercise_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
@@ -40,5 +43,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_19_045941) do
   end
 
   add_foreign_key "exercises", "sessions"
+  add_foreign_key "exercises", "users"
   add_foreign_key "sessions", "users"
 end
