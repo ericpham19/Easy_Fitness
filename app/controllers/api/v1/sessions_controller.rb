@@ -10,6 +10,7 @@ class Api::V1::SessionsController < ApplicationController
 
         if @session.save
             render json: @session
+           
         else
             render json: {error: "session could not be created. Please try again."}
         end

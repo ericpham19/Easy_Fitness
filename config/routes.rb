@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :sessions
       resources :exercises
         post '/login', to: 'auth#create'
+        get '/sign_in', to: 'auth#new'
         get '/current_user', to: 'auth#show'
         post '/sign_up', to: 'users#create'
         get '/users', to: 'users#index'

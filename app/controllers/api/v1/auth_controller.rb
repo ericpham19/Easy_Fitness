@@ -1,6 +1,10 @@
 class Api::V1::AuthController < ApplicationController
     skip_before_action :authorized, only: [:create]
 
+    def new
+
+    end
+    
    def create
        @user = User.find_by(username: user_login_params[:username])
        if @user && @user.authenticate(user_login_params[:password])

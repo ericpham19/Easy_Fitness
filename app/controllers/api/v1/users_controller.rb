@@ -18,6 +18,7 @@ class Api::V1::UsersController < ApplicationController
       @user = User.find(params[:id])
       if @user
           render json: @user, include: ["sessions"]
+         
       else
           render json: {error: "user could not be found."}
       end
