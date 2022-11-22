@@ -1,36 +1,56 @@
 
 import './App.css';
-import axios from "axios";
-import Sessions from "./components/sessions";
-import Users from "./components/users";
+import react from 'react';
 import {useState, useEffect} from "react";
-const API_URL = "http://localhost:3000/api/v1/users";
+import axios from "axios";
+import Sessions from "./components/Sessions";
+import Users from "./components/Users";
+import Home from "./Pages/Home";
+import LogInPage from "./Pages/LogInPage";
+import SignUpPage from "./components/SignUp";
+import AuthDemo from "./components/AuthDemo";
+import { BrowserRouter , Routes, Route, } from 'react-router-dom';
+import Navbar from './components/Navbar';
 
-function getAPIData(){
-  return axios.get(API_URL).then((response) => response.data)
-}
+
+
+
+
 function App() {
 
-  const [users ,setUsers]= useState([])
+  
 
-  useEffect(() => {
-    let mounted = true;
-    getAPIData(). then((items) => {
-      if (mounted) {
-        setUsers(items);
 
-      }
-    });
-    return () => (mounted = false);
-  } , [])
+
+  // useEffect(() => {
+  //   let mounted = true;
+  //   getAPIData(). then((items) => {
+  //     if (mounted) {
+  //       setUsers(items);
+
+  //     }
+  //   });
+  //   return () => (mounted = false);
+  // } , [])
 
 
   return (
-    <div className="App">
-      <h1>SUPPP</h1>
-      <Users users= {users}/>
-    </div>
+
+    
+    
+
+      <BrowserRouter>
+        <Navbar></Navbar>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/login" element={<LogInPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          
+
+        </Routes>
+
+      </BrowserRouter>
+    
   );
 }
-
 export default App;
