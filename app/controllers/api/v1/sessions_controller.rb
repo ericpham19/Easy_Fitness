@@ -1,6 +1,7 @@
 class Api::V1::SessionsController < ApplicationController
    
     before_action :set_session, only: %i[ show edit update destroy ]
+    before_action :set_user_session, only: %i[:show, :update, :destroy]
     
     def index
         @session= Session.all
@@ -30,6 +31,10 @@ class Api::V1::SessionsController < ApplicationController
     def set_session
         @session = Session.find(params[:id])
       end
+
+    def set_user_session
+        @session = @user.sessions.find_by!(id: params[:id]) if @user
+    end
 
     def session_params
         params.require(:session).permit(:name, :notes, :exercise_name, :user_id)

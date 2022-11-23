@@ -7,7 +7,7 @@ const Navbar = () => {
     <Link to= "/">
     
     <div>
-      HELLO
+    NAVBAR
     </div>
 
     </Link>

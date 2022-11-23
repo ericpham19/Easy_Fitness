@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
+  const nav = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -9,8 +10,10 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState('');
 
   function createUser(event) {
+
     event.preventDefault();
     event.target.reset();
+    nav("/LogIn")
 
     let user = {
       username,
