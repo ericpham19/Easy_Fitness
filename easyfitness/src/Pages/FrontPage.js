@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom"
 import React from 'react'
 
-const Home = () => {
+const FrontPage = () => {
   return (
     <div class= "flex flex-col justify-center items-center  ">
       <div class= "  ">
@@ -13,7 +13,7 @@ const Home = () => {
        <span>|</span>
        <NavLink  class="text-xl"to="/signup">Sign Up</NavLink>
      </div>
-
+      
       </div>
       
 
@@ -22,5 +22,4 @@ const Home = () => {
     </div>
   )
 }
-
-export default Home
+export default FrontPage;

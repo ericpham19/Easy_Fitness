@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {  useNavigate, NavLink } from 'react-router-dom';
-import UserHomePage from '../Pages/UserHomePage';
+
 export default function Login({ setCurrentUser }) {
   const nav = useNavigate();
   const [username, setUsername] = useState('');
@@ -9,7 +9,7 @@ export default function Login({ setCurrentUser }) {
   function handleLogin(event) {
     event.preventDefault();
     event.target.reset();
-    nav('/UserHomePage')
+    nav('/User')
 
 
     const user = { username, password };

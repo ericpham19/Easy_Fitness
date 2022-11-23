@@ -5,13 +5,15 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import Sessions from "./components/Sessions";
 import Users from "./components/Users";
-import Home from "./Pages/Frontpage";
+
 import LogInPage from "./Pages/LogInPage";
 import SignUpPage from "./components/SignUp";
 
 import { BrowserRouter , Routes, Route, } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import SessionsPage from "./Pages/SessionsPage"
+import FrontPage from './Pages/FrontPage';
+import UserPage from './Pages/UserPage';
 
 
 
@@ -58,10 +60,11 @@ function App() {
       <BrowserRouter>
         <Navbar></Navbar>
         <Routes>
-          <Route path="/" element={<Home/>} />
+          <Route path="/" element={<FrontPage/>} />
           <Route path="/login" element={<LogInPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/sessionspage" element={<SessionsPage />} />
+          <Route path="/user" element={<UserPage />} />
 
         </Routes>
 
