@@ -5,6 +5,7 @@ class CreateExercises < ActiveRecord::Migration[7.0]
       t.integer :set
       t.integer :weight_kg
       t.integer :reps
+      t.boolean :completed
      
 
       t.timestamps

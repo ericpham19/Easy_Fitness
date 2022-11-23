@@ -16,6 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_004145) do
     t.integer "set"
     t.integer "weight_kg"
     t.integer "reps"
+    t.boolean "completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "session_id", null: false
