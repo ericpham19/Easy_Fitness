@@ -11,7 +11,7 @@ class Api::V1::AuthController < ApplicationController
           @token = generate_token(@user)
           render json:  {user: UserSerializer.new(@user), jwt: @token }, status: :created
       else
-        render json: {error: 'That user could not be found'}, status: 401
+        render json: {error: true, message: 'That user could not be found'}, status: 401
       end
     end
 
@@ -20,7 +20,7 @@ class Api::V1::AuthController < ApplicationController
        if logged_in?
            render json: current_user
        else
-           render json: { error: 'No user could be found'}, status: 401
+           render json: {error: true, message: 'No user could be found'}, status: 401
        end
    end
 
