@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-    skip_before_action :authorized, only: [:create, :show, :index]
+    skip_before_action :authenticate_user, only: [:create, :show, :index]
   
     
 
@@ -29,12 +29,11 @@ class Api::V1::UsersController < ApplicationController
  
     def create
       @user = User.new(user_params)
-      if @user.valid?
-          @user.save
-          @token = issue_token(@user)
+      if @user.save
+          @token = generate_token(@user)
           render json: { user: @user, jwt: @token }
       else
-          render json: { error: 'failed to create user' }, status: :not_acceptable
+          render json: { error: true, message: @user.errors.full_messages.join(",") }, status: :not_acceptable
       end
     end
 

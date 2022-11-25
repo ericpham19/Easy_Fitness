@@ -1,8 +1,25 @@
 
     class ApplicationController < ActionController::API
+        include JwtToken
+         
+        before_action :authenticate_user
+        
+        def authenticate_user
+            token = request.headers['Authorization']
+            begin
+                decoded_hash = jwt_decode(token)
+                @current_user = User.find(decoded_hash[:user_id])
+            rescue ActiveRecord::RecordNotFound => e
+                render json: { error: true, message: 'User not found' }, status: :unauthorized
+            rescue JWT::DecodeError => e
+                render json: { error: true, message: 'Invalid Token' }, status: :unauthorized
+            end
+        end
 
-        before_action :authorized
-     
+        def generate_token(user)
+            jwt_encode({user_id: user.id})
+        end
+
         def jwt_key
             Rails.application.credentials.jwt_key
         end
