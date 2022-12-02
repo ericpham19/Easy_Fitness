@@ -1,3 +1,5 @@
 class SessionSerializer < ActiveModel::Serializer
-  attributes :id, :notes, :user_id, :session_exercises
+  attributes :id, :notes, :user_id
+
+  has_many :session_exercises
 end
