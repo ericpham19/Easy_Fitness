@@ -4,7 +4,8 @@ class Api::V1::SessionsController < ApplicationController
     before_action :set_user_session, only: %i[:show, :update, :destroy]
 
     def index
-        @session= Session.all
+        @session=  @current_user.sessions.order(:created_at)
+        render json: @session, status: :ok
     end
 
     def create
