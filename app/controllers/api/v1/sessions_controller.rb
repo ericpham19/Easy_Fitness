@@ -2,16 +2,16 @@ class Api::V1::SessionsController < ApplicationController
    
     before_action :set_session, only: %i[ show edit update destroy ]
     before_action :set_user_session, only: %i[:show, :update, :destroy]
-    
+
     def index
         @session= Session.all
     end
+
     def create
         @session = Session.new(session_params)
 
         if @session.save
             render json: @session
-           
         else
             render json: {error: "session could not be created. Please try again."}
         end
@@ -37,7 +37,10 @@ class Api::V1::SessionsController < ApplicationController
     end
 
     def session_params
-        params.require(:session).permit(:name, :notes, :exercise_name, :user_id)
+        session_params = params.require(:session).permit(:notes, :duration)
+        session_params[:user_id] = @current_user.id
+        session_params[:session_exercises_attributes] =  params.require(:session)[:exercises].map{|e| {exercise_id: e[:id]}}
+        session_params
     end
 
 end

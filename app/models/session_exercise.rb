@@ -1,2 +1,3 @@
+
 class SessionExercise < ApplicationRecord
 end
