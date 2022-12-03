@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, only: [:create, :show, :index]
-      resources :sessions
+      resources :sessions do
+        collection do
+          get 'weekly_stats'
+        end
+      end
       resources :exercises
         post '/login', to: 'auth#create'
         get '/sign_in', to: 'auth#new'

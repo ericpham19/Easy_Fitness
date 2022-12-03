@@ -2,7 +2,6 @@ class Api::V1::SessionsController < ApplicationController
    
     before_action :set_session, only: %i[ show edit update destroy ]
     before_action :set_user_session, only: %i[:show, :update, :destroy]
-
     def index
         @session=  @current_user.sessions.order(:created_at)
         render json: @session, status: :ok
@@ -31,7 +30,24 @@ class Api::V1::SessionsController < ApplicationController
         end
     end
 
+    def weekly_stats
+        render status: :ok, json: weekly_weights
+    end
+
     private
+
+    def weekly_weights
+        data = []
+        labels = []
+        @current_user.sessions.order(created_at: :asc).group_by {|s| s.created_at.end_of_week }.each do |week, sessions|
+            data.push(sessions.reduce(0) {|sum, session| sum + (session.session_exercises.reduce(0) {|sum ,e| sum + (e.exercise_sets.reduce(0) {|sum, set| sum + (set.weight || 0)})})})
+            labels.push(week.strftime("%m / %d"))
+        end
+        {
+            data: data,
+            labels: labels
+        }
+    end
 
     def set_session
         @session = Session.find(params[:id])
