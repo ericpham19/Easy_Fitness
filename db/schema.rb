@@ -10,28 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_21_004145) do
-  create_table "exercises", force: :cascade do |t|
-    t.string "name"
-    t.integer "set"
-    t.integer "weight_kg"
-    t.integer "reps"
+ActiveRecord::Schema[7.0].define(version: 2022_12_02_212414) do
+  create_table "exercise_sets", force: :cascade do |t|
+    t.integer "number"
+    t.integer "session_exercise_id", null: false
+    t.integer "weight", default: 0
+    t.integer "reps", default: 0
     t.boolean "completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["session_exercise_id"], name: "index_exercise_sets_on_session_exercise_id"
+  end
+
+  create_table "exercises", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "session_exercises", force: :cascade do |t|
     t.integer "session_id", null: false
-    t.integer "user_id", null: false
-    t.index ["session_id"], name: "index_exercises_on_session_id"
-    t.index ["user_id"], name: "index_exercises_on_user_id"
+    t.integer "exercise_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_session_exercises_on_exercise_id"
+    t.index ["session_id"], name: "index_session_exercises_on_session_id"
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.string "name"
     t.text "notes"
-    t.text "exercise_name"
+    t.string "duration"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
@@ -43,7 +54,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_004145) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "exercises", "sessions"
-  add_foreign_key "exercises", "users"
+  add_foreign_key "exercise_sets", "session_exercises"
+  add_foreign_key "session_exercises", "exercises"
+  add_foreign_key "session_exercises", "sessions"
   add_foreign_key "sessions", "users"
 end
