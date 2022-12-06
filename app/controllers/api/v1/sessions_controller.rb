@@ -34,13 +34,18 @@ class Api::V1::SessionsController < ApplicationController
         render status: :ok, json: weekly_weights
     end
 
+    def destroy
+        Session.find_by(id: params[:id])&.destroy
+        render status: :ok, json: {message: 'Session Deleted!'}
+    end
+
     private
 
     def weekly_weights
         data = []
         labels = []
         @current_user.sessions.order(created_at: :asc).group_by {|s| s.created_at.end_of_week }.each do |week, sessions|
-            data.push(sessions.reduce(0) {|sum, session| sum + (session.session_exercises.reduce(0) {|sum ,e| sum + (e.exercise_sets.reduce(0) {|sum, set| sum + (set.weight || 0)})})})
+            data.push(sessions.count)
             labels.push(week.strftime("%m / %d"))
         end
         {
