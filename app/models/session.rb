@@ -4,4 +4,6 @@ class Session < ApplicationRecord
 
     belongs_to :user
     accepts_nested_attributes_for :session_exercises
+    validates :notes , presence: true
+    validates :notes,uniqueness: true
 end

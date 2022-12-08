@@ -17,7 +17,8 @@ class Api::V1::SessionsController < ApplicationController
             end
             render json: @session, status: :created
         else
-            render json: {error: "session could not be created. Please try again."}
+            render json: { error: true, message: @session.errors.full_messages.join(",") }, status: :not_acceptable
+            
         end
     end
 
