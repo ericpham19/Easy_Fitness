@@ -1,3 +1,4 @@
+require "pry"
 class Api::V1::SessionsController < ApplicationController
    
     before_action :set_session, only: %i[ show edit update destroy ]
@@ -9,18 +10,20 @@ class Api::V1::SessionsController < ApplicationController
 
     def create
         @session = Session.new(session_params)
-
+        
         if @session.save
-            @session.session_exercises.each do |e| 
-                sets = exercise_sets_params[:sets].select{|s| s[:exercise_id] == e.exercise_id }
-                sets.each {|s| e.exercise_sets.create(s.as_json(except: [:exercise_id])) }
-            end
-            render json: @session, status: :created
-        else
-            render json: { error: true, message: @session.errors.full_messages.join(",") }, status: :not_acceptable
-            
+        @session.session_exercises.each do |e|
+        sets = exercise_sets_params[:sets].select{|s| s[:exercise_id] == e.exercise_id }
+        
+        sets.each {|s| e.exercise_sets.create(s.as_json(except: [:exercise_id])) if s['reps'] != 0}
         end
-    end
+        render json: @session, status: :created
+        else
+        render json: { error: true, message: @session.errors.full_messages.join(",") }, status: :not_acceptable
+        end
+        end
+        
+        
 
     def show
         @session = Session.find(params[:id])
