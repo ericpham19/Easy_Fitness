@@ -51,5 +51,5 @@ processes = []
   url_prefix = "/"
 
 [mounts]
-  source="easy_fitness_data"
-  destination="/data"
+  source="easy_fitness_db"
+  destination="/mnt/easy_fitness_db"
