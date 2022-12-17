@@ -8,14 +8,13 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins "https://fastidious-cocada-8350df.netlify.app/"
-
     resource "*",
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head]
+      credentials: true
   end
   allow do
     origins "http://localhost:8080"
-
     resource "*",
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head],
@@ -24,7 +23,13 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 
   allow do
     origins "http://localhost:3001"
-
+    resource "*",
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      credentials: true
+  end
+  allow do
+    origins "easyfitness.fly.dev/api/v1"
     resource "*",
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head],
